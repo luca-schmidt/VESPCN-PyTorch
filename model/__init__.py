@@ -1,14 +1,15 @@
 import os
 from importlib import import_module
-
 import torch
 import torch.nn as nn
+from config import component, scaling_factor
+
+file_name = f'{component}_{scaling_factor}x'
 
 
 class Model(nn.Module):
     def __init__(self, args, ckp):
         super(Model, self).__init__()
-        #print('Making model...')
         self.args = args
         self.scale = args.scale
         self.cpu = args.cpu
@@ -42,17 +43,17 @@ class Model(nn.Module):
         target = self.get_model()
         return target.state_dict(**kwargs)
 
-    def save(self, apath, is_best=False, filename=''):
+    def save(self, apath, is_best=False, filename=file_name):
         target = self.get_model()
         filename = 'model_{}'.format(filename)
         torch.save(
             target.state_dict(), 
-            os.path.join(apath, 'model', '{}latest.pt'.format(filename))
+            os.path.join(apath, 'model', '{}_latest.pt'.format(filename))
         )
         if is_best:
             torch.save(
                 target.state_dict(),
-                os.path.join(apath, 'model', '{}best.pt'.format(filename))
+                os.path.join(apath, 'model', '{}_best.pt'.format(filename))
             )
 
     def load(self, apath, pre_train='.', resume=False, cpu=False):

@@ -11,6 +11,8 @@ class ESPCN_multiframe2(nn.Module):
     # Add Residual connection!
     def __init__(self, args):
         super(ESPCN_multiframe2, self).__init__()
+        self.name = 'ESPCN_mf'
+
         print("Creating ESPCN multiframe2 (x%d)" % args.scale)
         network = [nn.Conv2d(args.n_colors * args.n_sequence, 64, kernel_size=3, padding=1), nn.ReLU(True)]
         network.extend([nn.Conv2d(64, 64, kernel_size=3, padding=1), nn.ReLU(True)])
@@ -31,6 +33,6 @@ class ESPCN_multiframe2(nn.Module):
             # squeeze frames n_sequence * [N, 1, n_colors, H, W] -> n_sequence * [N, n_colors, H, W]
             lr_frames_squeezed = [torch.squeeze(frame, dim = 1) for frame in x]
             # concatenate frames n_sequence * [N, n_colors, H, W] -> [N, n_sequence * n_colors, H, W]
-            x = torch.cat(lr_frames_squeezed, dim = 1)    
-        
+            x = torch.cat(lr_frames_squeezed, dim = 1)
+
         return self.net(x)

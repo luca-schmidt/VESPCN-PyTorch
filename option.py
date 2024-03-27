@@ -17,26 +17,14 @@ parser.add_argument('--cpu', action='store_true',
                     help='use cpu only')
 parser.add_argument('--n_GPUs', type=int, default=1,
                     help='number of GPUs')
-parser.add_argument('--seed', type=int, default=1,
+parser.add_argument('--seed', type=int, default=2,
                     help='random seed')
 
-# Data specifications
-parser.add_argument('--dir_data', type=str, default='../../Dataset',
-                    help='dataset directory')
-parser.add_argument('--dir_data_test', type=str, default='../../Dataset',
-                    help='dataset directory')
-parser.add_argument('--dir_demo', type=str, default='../test',
-                    help='demo image directory')
-parser.add_argument('--data_train', type=str, default='DIV2K',
-                    help='train dataset name')
-parser.add_argument('--data_test', type=str, default='Set5',
-                    help='test dataset name')
-parser.add_argument('--data_range', type=str, default='1-90/91-100',
-                    help='train/test data range')
+
 parser.add_argument('--process', action='store_true',
                     help='if True, load all dataset at once at RAM')
-parser.add_argument('--scale', type=str, default=3,
-                    help='super resolution scale')
+parser.add_argument('--scale', type=str, default=2,
+                    help='super resolution scale') # set scale parameter to 4
 parser.add_argument('--patch_size', type=int, default=20,
                     help='output patch size')
 parser.add_argument('--rgb_range', type=int, default=1,
@@ -49,6 +37,7 @@ parser.add_argument('--no_augment', action='store_true',
 # Video SR parameters
 parser.add_argument('--n_sequence', type=int, default=3,
                     help='length of image sequence per video')
+
 parser.add_argument('--n_frames_per_video', type=int, default=30,
                     help='number of frames per video to load')
 
@@ -56,7 +45,7 @@ parser.add_argument('--n_frames_per_video', type=int, default=30,
 # Model specifications
 parser.add_argument('--model', default='ESPCN',
                     help='model name')
-parser.add_argument('--pre_train', type=str, default='.',
+parser.add_argument('--pre_train', type=str, default='/experiment/save_path/model/model_latest.pt',
                     help='pre-trained model directory')
 
 
